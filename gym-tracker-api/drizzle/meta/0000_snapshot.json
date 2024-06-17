@@ -1,11 +1,11 @@
 {
-  "id": "3465f89e-15c7-4845-bfcf-75041e3bd56e",
+  "id": "3beee5c7-b25a-47a7-a9ce-bd48c08d395e",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.todos": {
-      "name": "todos",
+    "public.users": {
+      "name": "users",
       "schema": "",
       "columns": {
         "id": {
@@ -14,21 +14,15 @@
           "primaryKey": true,
           "notNull": true
         },
-        "name": {
-          "name": "name",
-          "type": "varchar",
+        "email": {
+          "name": "email",
+          "type": "varchar(400)",
           "primaryKey": false,
           "notNull": true
         },
-        "isCompleted": {
-          "name": "isCompleted",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "note": {
-          "name": "note",
-          "type": "text",
+        "googleId": {
+          "name": "googleId",
+          "type": "varchar(500)",
           "primaryKey": false,
           "notNull": false
         }
@@ -37,11 +31,11 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "todos_name_unique": {
-          "name": "todos_name_unique",
+        "users_email_unique": {
+          "name": "users_email_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "name"
+            "email"
           ]
         }
       }
