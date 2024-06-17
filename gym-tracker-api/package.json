@@ -29,6 +29,8 @@
     "@nestjs/platform-express": "^10.0.0",
     "@types/pg": "^8.11.6",
     "drizzle-orm": "^0.31.2",
+    "express-jwt": "^8.4.1",
+    "jwks-rsa": "^3.1.0",
     "pg": "^8.12.0",
     "postgres": "^3.4.4",
     "reflect-metadata": "^0.2.0",
