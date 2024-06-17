@@ -10,7 +10,7 @@ export const drizzleProvider = [
             console.log('Create a db connection...')
             const client = new Client(process.env.DATABASE_URL)
             await client.connect()
-            const db = drizzle(client, { schema })
+            const db = drizzle(client, { schema, logger: true })
             return db
         },
         exports: [DrizzleAsyncProvider]
