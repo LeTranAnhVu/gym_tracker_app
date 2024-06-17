@@ -9,7 +9,7 @@ import { GetVerificationKey, expressjwt } from 'express-jwt'
 import { expressJwtSecret } from 'jwks-rsa'
 import { promisify } from 'util'
 import { Request, Response } from 'express'
-import { UserService } from 'src/user/user.service'
+import { UsersService } from 'src/users/users.service'
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
     private AUTH0_DOMAIN: string
     constructor(
         private configService: ConfigService,
-        private userService: UserService
+        private usersService: UsersService
     ) {
         this.AUTH0_AUD = this.configService.get('AUTH0_AUD')
         this.AUTH0_DOMAIN = this.configService.get('AUTH0_DOMAIN')
@@ -65,7 +65,7 @@ export class AuthGuard implements CanActivate {
 
     private async syncUser(req: Request) {
         const { email, sub } = req.auth
-        const user = await this.userService.syncUser({
+        const user = await this.usersService.syncUser({
             email: email,
             googleId: sub
         })

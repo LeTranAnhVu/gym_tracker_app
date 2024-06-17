@@ -4,7 +4,7 @@ import { DrizzleAsyncProvider } from 'src/drizzle/drizzle.provider'
 import * as schema from '../drizzle/schema'
 import { eq } from 'drizzle-orm'
 @Injectable()
-export class UserService {
+export class UsersService {
     constructor(
         @Inject(DrizzleAsyncProvider) private db: NodePgDatabase<typeof schema>
     ) {}
