@@ -9,12 +9,16 @@ import { GetVerificationKey, expressjwt } from 'express-jwt'
 import { expressJwtSecret } from 'jwks-rsa'
 import { promisify } from 'util'
 import { Request, Response } from 'express'
+import { UserService } from 'src/user/user.service'
 
 @Injectable()
 export class AuthGuard implements CanActivate {
     private AUTH0_AUD: string
     private AUTH0_DOMAIN: string
-    constructor(private configService: ConfigService) {
+    constructor(
+        private configService: ConfigService,
+        private userService: UserService
+    ) {
         this.AUTH0_AUD = this.configService.get('AUTH0_AUD')
         this.AUTH0_DOMAIN = this.configService.get('AUTH0_DOMAIN')
     }
@@ -39,9 +43,15 @@ export class AuthGuard implements CanActivate {
 
         try {
             await checkJwt(request, response)
+            if (!request.auth.email) {
+                throw new UnauthorizedException()
+            }
+
             if (!this.hasPermission('impersonate:user', request)) {
                 throw new UnauthorizedException()
             }
+
+            await this.syncUser(request)
 
             return true
         } catch (error) {
@@ -51,5 +61,15 @@ export class AuthGuard implements CanActivate {
 
     private hasPermission(permission: string, req: Request) {
         return req?.auth?.permissions.includes(permission) ?? false
+    }
+
+    private async syncUser(req: Request) {
+        const { email, sub } = req.auth
+        const user = await this.userService.syncUser({
+            email: email,
+            googleId: sub
+        })
+
+        req.auth.id = user.id
     }
 }

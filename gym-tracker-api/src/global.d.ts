@@ -5,6 +5,7 @@ declare namespace Express {
 }
 
 interface TokenPayload {
+    id: number // from db
     email: string
     iss: string
     sub: string
