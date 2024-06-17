@@ -1,2 +1,2 @@
 export * from './users.schema'
-export * from './excercises.schema'
+export * from './exercises.schema'

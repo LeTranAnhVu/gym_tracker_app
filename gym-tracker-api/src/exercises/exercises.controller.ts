@@ -11,54 +11,51 @@ import {
     HttpCode,
     Req
 } from '@nestjs/common'
-import { ExcerciseService } from './excercise.service'
-import { CreateExcerciseDto } from './dto/create-excercise.dto'
-import { UpdateExcerciseDto } from './dto/update-excercise.dto'
+import { ExercisesService } from './exercises.service'
+import { CreateExerciseDto } from './dto/create-exercise.dto'
+import { UpdateExerciseDto } from './dto/update-exercise.dto'
 import { Request } from 'express'
 
-@Controller('excercises')
-export class ExcerciseController {
-    constructor(private readonly excerciseService: ExcerciseService) {}
+@Controller('exercises')
+export class ExercisesController {
+    constructor(private readonly exercisesService: ExercisesService) {}
 
     private getUserId(req: Request): number {
         return req.auth.id
     }
 
     @Post()
-    create(
-        @Req() req: Request,
-        @Body() createExcerciseDto: CreateExcerciseDto
-    ) {
+    create(@Req() req: Request, @Body() dto: CreateExerciseDto) {
         const userId = this.getUserId(req)
-        return this.excerciseService.create(createExcerciseDto, userId)
+        return this.exercisesService.create(dto, userId)
     }
 
     @Get()
     findAll(@Req() req: Request) {
         const userId = this.getUserId(req)
-        return this.excerciseService.findAll(userId)
+        return this.exercisesService.findAll(userId)
     }
 
     @Get(':id')
     findOne(@Req() req: Request, @Param('id', ParseIntPipe) id: number) {
         const userId = this.getUserId(req)
-        return this.excerciseService.findOne(id, userId)
+        return this.exercisesService.findOne(id, userId)
     }
 
     @Patch(':id')
     update(
         @Req() req: Request,
         @Param('id', ParseIntPipe) id: number,
-        @Body() updateExcerciseDto: UpdateExcerciseDto
+        @Body() dto: UpdateExerciseDto
     ) {
         const userId = this.getUserId(req)
-        return this.excerciseService.update(id, userId, updateExcerciseDto)
+        return this.exercisesService.update(id, userId, dto)
     }
 
     @HttpCode(HttpStatus.NO_CONTENT)
     @Delete(':id')
     remove(@Req() req: Request, @Param('id', ParseIntPipe) id: number) {
         const userId = this.getUserId(req)
-        return this.excerciseService.remove(id, userId)
+        return this.exercisesService.remove(id, userId)
     }
 }

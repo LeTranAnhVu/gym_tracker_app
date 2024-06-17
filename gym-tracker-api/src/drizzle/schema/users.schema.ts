@@ -1,6 +1,6 @@
 import { relations } from 'drizzle-orm'
 import { pgTable, serial, varchar } from 'drizzle-orm/pg-core'
-import { excercies } from './excercises.schema'
+import { exercises } from './exercises.schema'
 
 export const users = pgTable('users', {
     id: serial('id').primaryKey(),
@@ -9,7 +9,7 @@ export const users = pgTable('users', {
 })
 
 export const usersRelations = relations(users, ({ many }) => ({
-    createdExcercies: many(excercies)
+    createdExercises: many(exercises)
 }))
 
 export type InsertUser = typeof users.$inferInsert
