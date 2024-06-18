@@ -16,7 +16,7 @@ export class ExercisesService {
         @Inject(DrizzleAsyncProvider) private db: NodePgDatabase<typeof schema>
     ) {}
 
-    async create(dto: CreateExerciseDto, userId?: number) {
+    async create(userId: number, dto: CreateExerciseDto) {
         // Make sure no existing name from owner or common exercises before create new one
         const existings = await this.db.query.exercises.findFirst({
             where: and(
@@ -49,7 +49,7 @@ export class ExercisesService {
         })
     }
 
-    async findOne(id: number, userId: number) {
+    async findOne(userId: number, id: number) {
         const ex = await this.db.query.exercises.findFirst({
             where: and(
                 eq(schema.exercises.id, id),
@@ -67,8 +67,8 @@ export class ExercisesService {
         return ex
     }
 
-    async update(id: number, userId: number, dto: UpdateExerciseDto) {
-        const existingEx = await this.findOne(id, userId)
+    async update(userId: number, id: number, dto: UpdateExerciseDto) {
+        const existingEx = await this.findOne(userId, id)
 
         // make sure no duplicated name even in the common
         if (dto.name) {
@@ -98,8 +98,8 @@ export class ExercisesService {
         return updatedRows[0]
     }
 
-    async remove(id: number, userId: number) {
-        const existingEx = await this.findOne(id, userId)
+    async remove(userId: number, id: number) {
+        const existingEx = await this.findOne(userId, id)
         await this.db
             .delete(schema.exercises)
             .where(eq(schema.exercises.id, existingEx.id))

@@ -27,7 +27,7 @@ export class ExercisesController {
     @Post()
     create(@Req() req: Request, @Body() dto: CreateExerciseDto) {
         const userId = this.getUserId(req)
-        return this.exercisesService.create(dto, userId)
+        return this.exercisesService.create(userId, dto)
     }
 
     @Get()
@@ -39,7 +39,7 @@ export class ExercisesController {
     @Get(':id')
     findOne(@Req() req: Request, @Param('id', ParseIntPipe) id: number) {
         const userId = this.getUserId(req)
-        return this.exercisesService.findOne(id, userId)
+        return this.exercisesService.findOne(userId, id)
     }
 
     @Patch(':id')
@@ -49,13 +49,13 @@ export class ExercisesController {
         @Body() dto: UpdateExerciseDto
     ) {
         const userId = this.getUserId(req)
-        return this.exercisesService.update(id, userId, dto)
+        return this.exercisesService.update(userId, id, dto)
     }
 
     @HttpCode(HttpStatus.NO_CONTENT)
     @Delete(':id')
     remove(@Req() req: Request, @Param('id', ParseIntPipe) id: number) {
         const userId = this.getUserId(req)
-        return this.exercisesService.remove(id, userId)
+        return this.exercisesService.remove(userId, id)
     }
 }
