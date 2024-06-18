@@ -29,6 +29,13 @@
       "when": 1718657139605,
       "tag": "0003_rename-exercises-table",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1718696072873,
+      "tag": "0004_create-workouts-table",
+      "breakpoints": true
     }
   ]
 }

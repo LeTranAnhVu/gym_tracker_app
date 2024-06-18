@@ -4,7 +4,12 @@ import { ValidationPipe } from '@nestjs/common'
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule)
-    app.useGlobalPipes(new ValidationPipe())
+    app.useGlobalPipes(
+        new ValidationPipe({
+            transform: true,
+            whitelist: true // ignore the field from json that is not defined in the dto
+        })
+    )
     app.setGlobalPrefix('api')
     await app.listen(8000)
 }

@@ -7,6 +7,7 @@ import { APP_GUARD } from '@nestjs/core'
 import { AuthGuard } from './auth/auth.guard'
 import { UsersModule } from './users/users.module'
 import { ExercisesModule } from './exercises/exercises.module'
+import { WorkoutsModule } from './workouts/workouts.module'
 
 @Module({
     imports: [
@@ -16,7 +17,8 @@ import { ExercisesModule } from './exercises/exercises.module'
         DrizzleModule,
         AuthModule,
         UsersModule,
-        ExercisesModule
+        ExercisesModule,
+        WorkoutsModule
     ],
     controllers: [AppController],
     providers: [
