@@ -8,6 +8,7 @@ import { AuthGuard } from './auth/auth.guard'
 import { UsersModule } from './users/users.module'
 import { ExercisesModule } from './exercises/exercises.module'
 import { WorkoutsModule } from './workouts/workouts.module'
+import { ExerciseSetsModule } from './exercise-sets/exercise-sets.module'
 
 @Module({
     imports: [
@@ -18,7 +19,8 @@ import { WorkoutsModule } from './workouts/workouts.module'
         AuthModule,
         UsersModule,
         ExercisesModule,
-        WorkoutsModule
+        WorkoutsModule,
+        ExerciseSetsModule
     ],
     controllers: [AppController],
     providers: [

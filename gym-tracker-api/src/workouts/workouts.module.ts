@@ -6,6 +6,7 @@ import { DrizzleModule } from 'src/drizzle/drizzle.module'
 @Module({
     imports: [DrizzleModule],
     controllers: [WorkoutsController],
-    providers: [WorkoutsService]
+    providers: [WorkoutsService],
+    exports: [WorkoutsService]
 })
 export class WorkoutsModule {}
