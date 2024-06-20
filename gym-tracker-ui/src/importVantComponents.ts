@@ -1,8 +1,6 @@
-import { Button, Locale } from 'vant'
-import { App } from 'vue'
+import { Locale } from 'vant'
 import enUS from 'vant/es/locale/lang/en-US'
 
-export default function importVantComponents(app: App<Element>) {
+export default function setupVant() {
     Locale.use('en-US', enUS)
-    app.use(Button)
 }
