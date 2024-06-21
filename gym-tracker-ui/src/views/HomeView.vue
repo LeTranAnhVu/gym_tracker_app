@@ -1,13 +1,13 @@
 <script setup lang="ts"></script>
 <template>
-    <div>
+    <div class="pt-5">
         <!-- Header -->
         <van-nav-bar title="GymLog" left-text="Back" left-arrow @click-left="() => console.log('back')">
             <template #left>
                 <van-image
                     round
-                    width="40px"
-                    height="40px"
+                    width="60px"
+                    height="60px"
                     src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
                 />
             </template>
