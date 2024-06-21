@@ -7,3 +7,8 @@
   --color-btn-primary: #272D34;
   --color-btn-text-primary: #F5F5F6;
 }
+
+body {
+  color: var(--color-text);
+
+}
