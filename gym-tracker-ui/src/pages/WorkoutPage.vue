@@ -55,7 +55,7 @@ onBeforeUnmount(() => {
                     ></van-button>
                 </template>
                 <template #title>
-                    <h1 class="text-4xl">Workouts</h1>
+                    <h1 class="text-4xl">Workout</h1>
                 </template>
             </van-nav-bar>
         </div>
