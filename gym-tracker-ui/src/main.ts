@@ -7,6 +7,6 @@ import router from './router'
 
 const app = createApp(App)
 
-setupVant()
+setupVant(app)
 app.use(router)
 app.mount('#app')

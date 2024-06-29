@@ -1,22 +1,22 @@
 import { createWebHashHistory, createRouter } from 'vue-router'
-import HomeView from './views/HomeView.vue'
-import LoginView from './views/LoginView.vue'
-import NotFoundView from './views/NotFoundView.vue'
+import HomePage from './pages/HomePage.vue'
+import LoginPage from './pages/LoginPage.vue'
+import NotFoundPage from './pages/NotFoundPage.vue'
 import Layout from './components/Layout.vue'
-import AboutView from './views/AboutView.vue'
+import WorkoutsPage from './pages/WorkoutsPage.vue'
 const routes = [
     { path: '/', redirect: { name: 'home' }, name: 'root' },
-    { path: '/login', component: LoginView, name: 'login' },
+    { path: '/login', component: LoginPage, name: 'login' },
     {
         path: '/app',
         component: Layout,
         redirect: { name: 'home' },
         children: [
-            { path: 'home', component: HomeView, name: 'home' },
-            { path: 'about', component: AboutView, name: 'about' },
+            { path: 'home', component: HomePage, name: 'home' },
+            { path: 'about', component: WorkoutsPage, name: 'workouts' },
         ],
     },
-    { path: '/:pathMatch(.*)', component: NotFoundView },
+    { path: '/:pathMatch(.*)', component: NotFoundPage },
 ]
 
 const router = createRouter({

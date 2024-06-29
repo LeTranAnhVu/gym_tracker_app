@@ -7,7 +7,13 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Card1: typeof import('./src/components/Card1.vue')['default']
+    copy: typeof import('./src/components/HomeWorkoutItem copy.vue')['default']
+    HomeAddWorkoutItem: typeof import('./src/components/HomeAddWorkoutItem.vue')['default']
+    HomeWorkoutItem: typeof import('./src/components/HomeWorkoutItem.vue')['default']
+    HomeWorkouts: typeof import('./src/components/HomeWorkouts.vue')['default']
     Layout: typeof import('./src/components/Layout.vue')['default']
+    Navbar: typeof import('./src/components/Navbar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     VanActionBar: typeof import('vant/es')['ActionBar']
@@ -15,9 +21,14 @@ declare module 'vue' {
     VanCalendar: typeof import('vant/es')['Calendar']
     VanCell: typeof import('vant/es')['Cell']
     VanCellGroup: typeof import('vant/es')['CellGroup']
+    VanCollapse: typeof import('vant/es')['Collapse']
+    VanCollapseItem: typeof import('vant/es')['CollapseItem']
+    VanCountDown: typeof import('vant/es')['CountDown']
+    VanField: typeof import('vant/es')['Field']
     VanFloatingPanel: typeof import('vant/es')['FloatingPanel']
     VanIcon: typeof import('vant/es')['Icon']
     VanImage: typeof import('vant/es')['Image']
     VanNavBar: typeof import('vant/es')['NavBar']
+    VantIcon: typeof import('vant/es')['tIcon']
   }
 }
