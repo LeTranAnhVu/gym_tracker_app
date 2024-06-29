@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --color-accent: #272D34;
   --color-bg-secondary: #E1F0F4;
@@ -6,4 +10,40 @@
   
   --color-btn-primary: #272D34;
   --color-btn-text-primary: #F5F5F6;
+
+  color: var(--color-text);
+}
+
+/* Why there are two root https://vant-ui.github.io/vant/?ref=madewithvuejs.com#/en-US/config-provider#custom-css-variables */
+:root:root {
+  --van-button-primary-background: var(--color-btn-primary);
+  --van-button-primary-border-color: var(--color-btn-primary);
+  --van-nav-bar-height	: 80px;
+  --van-nav-bar-icon-color: var(--color-text);
+  /* --van-toast-text-color: var(--color-text); */
+}
+
+.van-field.van-cell {
+  --van-cell-background: var(--color-bg-primary);
+}
+
+/*
+    https://github.com/tailwindlabs/tailwindcss/discussions/2394
+    https://github.com/tailwindlabs/tailwindcss/pull/5732
+*/
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
+body {
+  color: var(--color-text);
+
 }

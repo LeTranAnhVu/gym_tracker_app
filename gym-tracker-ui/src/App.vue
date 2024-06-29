@@ -1,11 +1,7 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
-    <div>
-        <van-button color="var(--color-accent)" type="primary">sdjfasd</van-button>
-    </div>
+    <RouterView />
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
