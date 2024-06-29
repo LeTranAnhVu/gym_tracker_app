@@ -13,7 +13,7 @@ const routes = [
         redirect: { name: 'home' },
         children: [
             { path: 'home', component: HomePage, name: 'home' },
-            { path: 'about', component: WorkoutsPage, name: 'workouts' },
+            { path: 'workouts', component: WorkoutsPage, name: 'workouts' },
         ],
     },
     { path: '/:pathMatch(.*)', component: NotFoundPage },

@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref } from 'vue'
+import AddExercise from '../components/AddExercise.vue'
+import { showFailToast, showSuccessToast, showToast } from 'vant'
 
 function n(num: number, len = 2) {
     return `${num}`.padStart(len, '0')
@@ -25,18 +27,16 @@ const interval = setInterval(() => {
         countHours.value++
     }
 }, 1000)
-const floatingHeight = ref(0)
-const currentHeight = ref(0)
+
 const openAddWorkout = () => {
-    currentHeight.value = 100
-    floatingHeight.value = 100
-}
-const closeAddWorkout = () => {
-    floatingHeight.value = 0
+    showAddExerciseModal.value = true
 }
 
-const changeHeight = ({ height }: { height: number }) => {
-    currentHeight.value = height
+const showAddExerciseModal = ref(false)
+function addExercise(id: number) {
+    console.log('addExercise', id)
+    showAddExerciseModal.value = false
+    showSuccessToast('Added')
 }
 
 onBeforeUnmount(() => {
@@ -71,46 +71,17 @@ onBeforeUnmount(() => {
                 size="large"
                 :style="{ borderRadius: '10px' }"
                 @click="openAddWorkout"
-            ></van-button>
+                >Add Exercise</van-button
+            >
 
             <!-- list -->
-            <div v-for="(_, i) in new Array(5)" :key="i" class="card rounded-xl p-5 bg-neutral-1">
-                <div class="header flex flex-nowrap items-center justify-between">
-                    <p class="title text-2xl font-regular">Bench Press (Upper)</p>
-                    <p class="meta text-sm italic font-light bg-accent-2 rounded-full px-3">15/07/24</p>
-                </div>
-                <div class="body mt-2 flex flex-wrap font-light">
-                    <p class="w-[50%] text-sm mb-2">Weight: <span>12 | 14 | 16 | 18</span></p>
-                    <p class="w-[50%] text-sm mb-2">Arg reps: <span>9 | 10 | 5.4 | 5</span></p>
-                    <p class="w-[50%] text-sm mb-2">Sets: <span>3 | 4 | 5 | 4</span></p>
-                </div>
-                <p>
-                    Note:
-                    <span
-                        >Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                        the industry's standard dummy text e
-                    </span>
-                </p>
-            </div>
+            <ExerciseCardList></ExerciseCardList>
 
-            <van-floating-panel :anchors="[floatingHeight, 900 * 0.8]" @height-change="changeHeight">
-                <template #header>
-                    <div class="flex items-center justify-center p-5 relative rounded-t-lg bg-gray-200">
-                        <div class="van-floating-panel__header-bar"></div>
-                        <van-button
-                            v-if="currentHeight === 100"
-                            icon="cross"
-                            round
-                            :style="{ right: '5px', position: 'absolute', background: 'none', border: 'none' }"
-                            @click="closeAddWorkout"
-                        ></van-button>
-                    </div>
-                </template>
-                <van-cell-group>
-                    <van-cell v-for="i in 26" :key="i" :title="String.fromCharCode(i + 64)" size="large" />
-                    />
-                </van-cell-group>
-            </van-floating-panel>
+            <van-popup v-model:show="showAddExerciseModal" position="bottom" round :style="{ height: '85%' }" closeable>
+                <div class="mt-5">
+                    <AddExercise @add-exercise="addExercise"></AddExercise>
+                </div>
+            </van-popup>
         </div>
     </div>
 </template>

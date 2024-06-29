@@ -7,9 +7,13 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AddExercise: typeof import('./src/components/AddExercise.vue')['default']
     Card1: typeof import('./src/components/Card1.vue')['default']
     copy: typeof import('./src/components/HomeWorkoutItem copy.vue')['default']
+    ExerciseCard: typeof import('./src/components/ExerciseCard.vue')['default']
+    ExerciseCardList: typeof import('./src/components/ExerciseCardList.vue')['default']
     HomeAddWorkoutItem: typeof import('./src/components/HomeAddWorkoutItem.vue')['default']
+    HomeDashboard: typeof import('./src/components/HomeDashboard.vue')['default']
     HomeWorkoutItem: typeof import('./src/components/HomeWorkoutItem.vue')['default']
     HomeWorkouts: typeof import('./src/components/HomeWorkouts.vue')['default']
     Layout: typeof import('./src/components/Layout.vue')['default']
@@ -29,6 +33,8 @@ declare module 'vue' {
     VanIcon: typeof import('vant/es')['Icon']
     VanImage: typeof import('vant/es')['Image']
     VanNavBar: typeof import('vant/es')['NavBar']
+    VanPopup: typeof import('vant/es')['Popup']
+    VanSearch: typeof import('vant/es')['Search']
     VantIcon: typeof import('vant/es')['tIcon']
   }
 }

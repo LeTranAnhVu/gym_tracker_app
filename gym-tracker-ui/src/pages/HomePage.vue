@@ -30,7 +30,7 @@
         <!-- end header -->
 
         <!-- main card -->
-        <Card1></Card1>
+        <HomeDashboard></HomeDashboard>
         <!-- end main card -->
         <div class="mt-10">
             <HomeWorkouts title="Workouts"></HomeWorkouts>
