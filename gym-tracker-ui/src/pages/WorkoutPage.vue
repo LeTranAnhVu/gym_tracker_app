@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref } from 'vue'
 import AddExercise from '../components/AddExercise.vue'
-import { showFailToast, showSuccessToast, showToast } from 'vant'
+import { showSuccessToast } from 'vant'
 
 function n(num: number, len = 2) {
     return `${num}`.padStart(len, '0')

@@ -9,7 +9,7 @@
             <HomeWorkouts title="Workouts"></HomeWorkouts>
         </div>
         <div class="mt-10">
-            <HomeWorkouts title="Exercises"></HomeWorkouts>
+            <HomeExercises title="Exercises"></HomeExercises>
         </div>
     </div>
 </template>
