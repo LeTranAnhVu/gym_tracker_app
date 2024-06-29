@@ -27,6 +27,10 @@
   --van-cell-background: var(--color-bg-primary);
 }
 
+.disable-dbl-tap-zoom {
+  touch-action: manipulation;
+}
+
 /*
     https://github.com/tailwindlabs/tailwindcss/discussions/2394
     https://github.com/tailwindlabs/tailwindcss/pull/5732

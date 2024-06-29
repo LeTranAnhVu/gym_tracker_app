@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { showToast } from 'vant'
 import { reactive, ref } from 'vue'
 
 const emit = defineEmits(['add-exercise'])

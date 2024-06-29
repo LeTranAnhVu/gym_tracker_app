@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, toRefs } from 'vue'
+import { toRefs } from 'vue'
 export type StepperItem = {
     unit: string
     value: number
@@ -24,9 +24,21 @@ const { stepper } = toRefs(props)
 <template>
     <div class="stepper-item">
         <div class="counter flex flex-nowrap gap-1 items-end justify-center">
-            <van-button class="stepper-button" plain round icon="minus" @click="decrease"></van-button>
+            <van-button
+                class="stepper-button disable-dbl-tap-zoom"
+                plain
+                round
+                icon="minus"
+                @click="decrease"
+            ></van-button>
             <p class="text-8xl w-[240px] text-center">{{ stepper.value }}</p>
-            <van-button class="stepper-button" plain round icon="plus" @click="increase"></van-button>
+            <van-button
+                class="stepper-button disable-dbl-tap-zoom"
+                plain
+                round
+                icon="plus"
+                @click="increase"
+            ></van-button>
         </div>
         <div class="info flex flex-nowrap grow gap-1 items-end justify-center text-center mt-5">
             <div class="left w-[30%] font-thin">
