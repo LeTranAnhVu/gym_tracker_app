@@ -44,21 +44,7 @@ onBeforeUnmount(() => {
 })
 </script>
 <template>
-    <div class="pt-5 px-5">
-        <div class="pb-5">
-            <van-nav-bar title="GymLog" left-text="Back" left-arrow @click-left="() => console.log('back')">
-                <template #left>
-                    <van-button
-                        round
-                        :style="{ height: '50px', width: '50px', background: 'var(--color-bg-secondary)' }"
-                        icon="arrow-left"
-                    ></van-button>
-                </template>
-                <template #title>
-                    <h1 class="text-4xl">Workout</h1>
-                </template>
-            </van-nav-bar>
-        </div>
+    <div class="px-5">
         <div class="flex flex-col gap-3">
             <van-cell-group inset :style="{ margin: 0 }">
                 <van-field v-model="duration" label="Duration" readonly />

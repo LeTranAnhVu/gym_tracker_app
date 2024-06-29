@@ -6,16 +6,21 @@ import Layout from './components/Layout.vue'
 import WorkoutPage from './pages/WorkoutPage.vue'
 import ExercisePage from './pages/ExercisePage.vue'
 const routes = [
-    { path: '/', redirect: { name: 'home' }, name: 'root' },
+    { path: '/', redirect: { name: 'home' }, name: 'root', meta: { title: 'GymloG' } },
     { path: '/login', component: LoginPage, name: 'login' },
     {
         path: '/app',
         component: Layout,
         redirect: { name: 'home' },
         children: [
-            { path: 'home', component: HomePage, name: 'home' },
-            { path: 'workouts/:workoutId', component: WorkoutPage, name: 'workout' },
-            { path: 'workouts/:workoutId/exercises/:exerciseId', component: ExercisePage, name: 'exercise' },
+            { path: 'home', component: HomePage, name: 'home', meta: { title: 'GymloG' } },
+            { path: 'workouts/:workoutId', component: WorkoutPage, name: 'workout', meta: { title: 'Workout' } },
+            {
+                path: 'workouts/:workoutId/exercises/:exerciseId',
+                component: ExercisePage,
+                name: 'exercise',
+                meta: { title: 'Exercise' },
+            },
         ],
     },
     { path: '/:pathMatch(.*)', component: NotFoundPage },
