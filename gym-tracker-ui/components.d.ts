@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AddExercise: typeof import('./src/components/AddExercise.vue')['default']
+    CreateExercisePopup: typeof import('./src/components/CreateExercisePopup.vue')['default']
     ExerciseCard: typeof import('./src/components/ExerciseCard.vue')['default']
     ExerciseCardList: typeof import('./src/components/ExerciseCardList.vue')['default']
     ExerciseHistoryTable: typeof import('./src/components/ExerciseHistoryTable.vue')['default']
@@ -21,6 +22,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Stepper: typeof import('./src/components/Stepper.vue')['default']
+    UpsertExercisePopup: typeof import('./src/components/UpsertExercisePopup.vue')['default']
     VanButton: typeof import('vant/es')['Button']
     VanCellGroup: typeof import('vant/es')['CellGroup']
     VanField: typeof import('vant/es')['Field']

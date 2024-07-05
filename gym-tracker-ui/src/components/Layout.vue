@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { useAuth0 } from '@auth0/auth0-vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 const activeHam = ref(false)
@@ -7,16 +8,28 @@ const router = useRouter()
 const route = useRoute()
 const title = computed(() => route.meta.title)
 function goBack() {
-    console.log('back')
     router.back()
 }
+const auth0 = useAuth0()
+const isAuthenticated = computed(() => auth0.isAuthenticated.value)
+const isLoadding = computed(() => auth0.isLoading.value)
 
 function toggleHam() {
     activeHam.value = !activeHam.value
 }
+
+watch(
+    [isAuthenticated, isLoadding],
+    async () => {
+        if (!isAuthenticated.value && !isLoadding.value) {
+            await auth0.loginWithRedirect()
+        }
+    },
+    { immediate: true },
+)
 </script>
 <template>
-    <div>
+    <div v-if="isAuthenticated && !isLoadding">
         <div class="pb-5">
             <van-nav-bar left-text="Back" left-arrow @click-left="goBack">
                 <template #left>
