@@ -5,11 +5,14 @@ import { DrizzleAsyncProvider } from 'src/drizzle/drizzle.provider'
 import { NodePgDatabase } from 'drizzle-orm/node-postgres'
 import * as schema from '../drizzle/schema'
 import { and, desc, eq, ilike } from 'drizzle-orm'
+import { CreateWorkoutsExercisesDto } from './dto/create-workouts-exercises.dto'
+import { ExercisesService } from 'src/exercises/exercises.service'
 
 @Injectable()
 export class WorkoutsService {
     constructor(
-        @Inject(DrizzleAsyncProvider) private db: NodePgDatabase<typeof schema>
+        @Inject(DrizzleAsyncProvider) private db: NodePgDatabase<typeof schema>,
+        private readonly exercisesService: ExercisesService
     ) {}
 
     async create(
@@ -50,6 +53,9 @@ export class WorkoutsService {
 
     async findOne(userId: number, workoutId: number): Promise<schema.Workout> {
         const existing = await this.db.query.workouts.findFirst({
+            with: {
+                exercises: true
+            },
             where: and(
                 eq(schema.workouts.createdBy, userId),
                 eq(schema.workouts.id, workoutId)
@@ -85,5 +91,45 @@ export class WorkoutsService {
         await this.db
             .delete(schema.workouts)
             .where(eq(schema.workouts.id, existing.id))
+    }
+
+    async addExercise(
+        userId: number,
+        workoutId: number,
+        dto: CreateWorkoutsExercisesDto
+    ): Promise<schema.WorkoutExercise> {
+        const workout = await this.findOne(userId, workoutId)
+        const exercise = await this.exercisesService.findOne(
+            userId,
+            dto.exerciseId
+        )
+        const createdRows = await this.db
+            .insert(schema.workoutsExercises)
+            .values({
+                ...dto,
+                exerciseId: exercise.id,
+                workoutId: workout.id,
+                createdAt: new Date()
+            })
+            .returning()
+        return createdRows[0]
+    }
+
+    async removeExercise(
+        userId: number,
+        workoutId: number,
+        workoutExercisesId: number
+    ): Promise<void> {
+        const existingWorkout = await this.findOne(userId, workoutId)
+        const existing = await this.db.query.workoutsExercises.findFirst({
+            where: and(
+                eq(schema.workoutsExercises.workoutId, existingWorkout.id),
+                eq(schema.workoutsExercises.id, workoutExercisesId)
+            )
+        })
+
+        await this.db
+            .delete(schema.workoutsExercises)
+            .where(eq(schema.workoutsExercises.id, existing.id))
     }
 }
