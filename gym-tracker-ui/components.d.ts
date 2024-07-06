@@ -25,6 +25,7 @@ declare module 'vue' {
     Stepper: typeof import('./src/components/Stepper.vue')['default']
     UpsertExercisePopup: typeof import('./src/components/UpsertExercisePopup.vue')['default']
     VanButton: typeof import('vant/es')['Button']
+    VanCell: typeof import('vant/es')['Cell']
     VanCellGroup: typeof import('vant/es')['CellGroup']
     VanField: typeof import('vant/es')['Field']
     VanImage: typeof import('vant/es')['Image']
@@ -32,6 +33,7 @@ declare module 'vue' {
     VanPopup: typeof import('vant/es')['Popup']
     VanSearch: typeof import('vant/es')['Search']
     VanSwipe: typeof import('vant/es')['Swipe']
+    VanSwipeCell: typeof import('vant/es')['SwipeCell']
     VanSwipeItem: typeof import('vant/es')['SwipeItem']
   }
 }

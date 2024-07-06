@@ -25,8 +25,8 @@ function createApiFetch(baseUrl: string, getToken: () => Promise<string>, logout
                 if (ctx.response?.status === 401) {
                     await logout()
                 }
-
-                throw Error(ctx.error.message)
+                console.log(ctx.error)
+                return ctx
             },
         },
     } as CreateFetchOptions)

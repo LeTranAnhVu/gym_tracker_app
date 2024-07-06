@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
-import AddExercise from '../components/AddExercisePopup.vue'
-import { showSuccessToast } from 'vant'
+import { showFailToast, showSuccessToast } from 'vant'
 import { useRoute } from 'vue-router'
 import { WorkoutDetail } from '../lib/models/WorkoutDetail'
 import { useApiFetch } from '../main'
@@ -65,6 +64,15 @@ async function loadData() {
         }
     }
 }
+async function deleteExercise(workoutId: number, id: number) {
+    const resp = await useApiFetch(`workouts/${workoutId}/exercises/${id}`).delete()
+    if (!resp.error.value) {
+        showSuccessToast(`Removed exercise ${id} from workout`)
+        await loadData()
+    } else {
+        showFailToast(`${resp.error.value}`)
+    }
+}
 </script>
 <template>
     <div class="px-5">
@@ -90,6 +98,8 @@ async function loadData() {
                     v-for="exercise in assosiatedExercises"
                     :key="exercise.id"
                     :exercise="exercise"
+                    :workout-id="workoutId"
+                    @delete-exercise="deleteExercise"
                 ></ExerciseCard>
             </div>
 
