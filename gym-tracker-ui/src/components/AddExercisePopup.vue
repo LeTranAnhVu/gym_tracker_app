@@ -22,7 +22,6 @@ function openCreateExercisePopup() {
 }
 
 function addToWorkout() {
-    console.log('addToWorkout workout')
     emit('add-exercise', selectedExerciseId.value)
 
     // reset
@@ -51,6 +50,10 @@ async function createNewExercise() {
     await useApiFetch('exercises').post(newExercise)
     showCreateExercisePopup.value = false
     await loadData()
+
+    // reset
+    newExercise.name = ''
+    newExercise.info = ''
 }
 
 const exercises = ref<Exercise[]>([])

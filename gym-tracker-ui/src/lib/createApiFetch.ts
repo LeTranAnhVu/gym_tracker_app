@@ -8,7 +8,6 @@ function createApiFetch(baseUrl: string, getToken: () => Promise<string>, logout
             // beforeFetch in pre-configured instance will only run when the newly spawned instance do not pass beforeFetch
             async beforeFetch({ options }) {
                 try {
-                    console.log('before fetch')
                     const token = await getToken()
                     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
                     ;(options.headers as any).Authorization = `Bearer ${token}`
