@@ -1,15 +1,10 @@
-import {
-    BadRequestException,
-    Inject,
-    Injectable,
-    NotFoundException
-} from '@nestjs/common'
+import { Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { CreateWorkoutDto } from './dto/create-workout.dto'
 import { UpdateWorkoutDto } from './dto/update-workout.dto'
 import { DrizzleAsyncProvider } from 'src/drizzle/drizzle.provider'
 import { NodePgDatabase } from 'drizzle-orm/node-postgres'
 import * as schema from '../drizzle/schema'
-import { and, eq } from 'drizzle-orm'
+import { and, desc, eq, ilike } from 'drizzle-orm'
 
 @Injectable()
 export class WorkoutsService {
@@ -21,16 +16,35 @@ export class WorkoutsService {
         userId: number,
         dto: CreateWorkoutDto
     ): Promise<schema.Workout> {
+        let workoutName = dto.name
+        const duplicatedOnes = await this.db.query.workouts.findMany({
+            where: and(
+                eq(schema.workouts.createdBy, userId),
+                ilike(schema.workouts.name, `${dto.name}%`)
+            ),
+            orderBy: [desc(schema.workouts.createdAt)]
+        })
+
+        if (duplicatedOnes.length > 0) {
+            workoutName = `${dto.name} (${duplicatedOnes.length})`
+        }
+
         const createdRows = await this.db
             .insert(schema.workouts)
-            .values({ ...dto, createdBy: userId, createdAt: new Date() })
+            .values({
+                ...dto,
+                name: workoutName,
+                createdBy: userId,
+                createdAt: new Date()
+            })
             .returning()
         return createdRows[0]
     }
 
     findAll(userId: number): Promise<schema.Workout[]> {
         return this.db.query.workouts.findMany({
-            where: eq(schema.workouts.createdBy, userId)
+            where: eq(schema.workouts.createdBy, userId),
+            orderBy: [desc(schema.workouts.createdAt)]
         })
     }
 
