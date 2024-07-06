@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AddExercise: typeof import('./src/components/AddExercise.vue')['default']
+    AddExercisePopup: typeof import('./src/components/AddExercisePopup.vue')['default']
     CreateExercisePopup: typeof import('./src/components/CreateExercisePopup.vue')['default']
     ExerciseCard: typeof import('./src/components/ExerciseCard.vue')['default']
     ExerciseCardList: typeof import('./src/components/ExerciseCardList.vue')['default']

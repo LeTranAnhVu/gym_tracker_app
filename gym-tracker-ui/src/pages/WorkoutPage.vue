@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref } from 'vue'
-import AddExercise from '../components/AddExercise.vue'
+import AddExercise from '../components/AddExercisePopup.vue'
 import { showSuccessToast } from 'vant'
 
 function n(num: number, len = 2) {
@@ -29,13 +29,13 @@ const interval = setInterval(() => {
 }, 1000)
 
 const openAddWorkout = () => {
-    showAddExerciseModal.value = true
+    showAddExercisePopup.value = true
 }
 
-const showAddExerciseModal = ref(false)
+const showAddExercisePopup = ref(false)
 function addExercise(id: number) {
     console.log('addExercise', id)
-    showAddExerciseModal.value = false
+    showAddExercisePopup.value = false
     showSuccessToast('Added')
 }
 
@@ -61,13 +61,9 @@ onBeforeUnmount(() => {
             >
 
             <!-- list -->
-            <ExerciseCardList></ExerciseCardList>
+            <!-- <ExerciseCardList></ExerciseCardList> -->
 
-            <van-popup v-model:show="showAddExerciseModal" position="bottom" round :style="{ height: '85%' }" closeable>
-                <div class="mt-5">
-                    <AddExercise @add-exercise="addExercise"></AddExercise>
-                </div>
-            </van-popup>
+            <AddExercisePopup v-model:show="showAddExercisePopup" @add-exercise="addExercise"></AddExercisePopup>
         </div>
     </div>
 </template>
