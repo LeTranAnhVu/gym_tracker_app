@@ -128,15 +128,21 @@ export class WorkoutsService {
     async removeExercise(
         userId: number,
         workoutId: number,
-        workoutExercisesId: number
+        exercisesId: number
     ): Promise<void> {
         const existingWorkout = await this.findOne(userId, workoutId)
         const existing = await this.db.query.workoutsExercises.findFirst({
             where: and(
                 eq(schema.workoutsExercises.workoutId, existingWorkout.id),
-                eq(schema.workoutsExercises.id, workoutExercisesId)
+                eq(schema.workoutsExercises.exerciseId, exercisesId)
             )
         })
+
+        if (!existing) {
+            throw new NotFoundException(
+                `Workout exercise with id ${exercisesId} not found`
+            )
+        }
 
         await this.db
             .delete(schema.workoutsExercises)

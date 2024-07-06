@@ -29,13 +29,17 @@ export class WorkoutsExercisesController {
         return this.workoutsService.addExercise(userId, workoutId, dto)
     }
 
-    @Delete(':id')
+    @Delete(':exerciseId')
     remove(
         @Req() req: Request,
         @Param('workoutId', ParseIntPipe) workoutId: number,
-        @Param('id', ParseIntPipe) id: number
+        @Param('exerciseId', ParseIntPipe) exerciseId: number
     ) {
         const userId = this.getUserId(req)
-        return this.workoutsService.removeExercise(userId, workoutId, id)
+        return this.workoutsService.removeExercise(
+            userId,
+            workoutId,
+            exerciseId
+        )
     }
 }
