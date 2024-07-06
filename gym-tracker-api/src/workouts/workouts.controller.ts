@@ -37,7 +37,7 @@ export class WorkoutsController {
     @Get(':id')
     findOne(@Req() req: Request, @Param('id', ParseIntPipe) id: number) {
         const userId = this.getUserId(req)
-        return this.workoutsService.findOne(userId, id)
+        return this.workoutsService.findOne(userId, id, true)
     }
 
     @Patch(':id')

@@ -51,11 +51,21 @@ export class WorkoutsService {
         })
     }
 
-    async findOne(userId: number, workoutId: number): Promise<schema.Workout> {
+    async findOne(
+        userId: number,
+        workoutId: number,
+        detail: boolean = false
+    ): Promise<schema.Workout> {
         const existing = await this.db.query.workouts.findFirst({
-            with: {
-                exercises: true
-            },
+            with: detail
+                ? {
+                      exercises: {
+                          with: {
+                              exercise: true
+                          }
+                      }
+                  }
+                : {},
             where: and(
                 eq(schema.workouts.createdBy, userId),
                 eq(schema.workouts.id, workoutId)
