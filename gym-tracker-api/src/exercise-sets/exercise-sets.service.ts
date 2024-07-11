@@ -4,7 +4,7 @@ import { UpdateExerciseSetDto } from './dto/update-exercise-set.dto'
 import { DrizzleAsyncProvider } from 'src/drizzle/drizzle.provider'
 import { NodePgDatabase } from 'drizzle-orm/node-postgres'
 import * as schema from '../drizzle/schema'
-import { and, eq } from 'drizzle-orm'
+import { and, avg, eq, sql } from 'drizzle-orm'
 import { NotFoundException } from '@nestjs/common'
 import { WorkoutsService } from 'src/workouts/workouts.service'
 import { ExercisesService } from 'src/exercises/exercises.service'
@@ -45,6 +45,59 @@ export class ExerciseSetsService {
         return this.db.query.exerciseSets.findMany({
             where: eq(schema.exerciseSets.workoutId, workout.id)
         })
+    }
+
+    async findAllGroupedByDate(
+        userId: number,
+        workoutId: number,
+        exerciseId: number
+    ) {
+        const workout = await this.workoutsService.findOne(userId, workoutId)
+        const aggregate = await this.db
+            .select({
+                workoutId: schema.exerciseSets.workoutId,
+                exerciseId: schema.exerciseSets.exerciseId,
+                date: sql`"createdAt"::date`,
+                sets: sql`count(${schema.exerciseSets.id})::int`,
+                avgWeight: sql`round(avg(${schema.exerciseSets.weight}), 2)`,
+                avgReps: sql`round(avg(${schema.exerciseSets.reps}), 2)`,
+                totalReps: sql`sum(${schema.exerciseSets.reps})::int`,
+                progress: sql`'neutral'`
+            })
+            .from(schema.exerciseSets)
+            .groupBy(
+                sql`"createdAt"::date`,
+                schema.exerciseSets.workoutId,
+                schema.exerciseSets.exerciseId
+            )
+            .having(
+                sql`"exerciseId" = ${exerciseId} AND "workoutId" = ${workout.id}`
+            )
+            .orderBy(sql`"createdAt"::date desc`)
+
+        for (let i = 0; i < aggregate.length; i++) {
+            let process = aggregate[i].progress
+            if (i < aggregate.length - 1) {
+                const previous = aggregate[i + 1]
+                const current = aggregate[i]
+                if (
+                    current.avgWeight == previous.avgWeight &&
+                    current.avgReps == previous.avgReps
+                ) {
+                    process = 'neutral'
+                } else if (
+                    current.avgWeight > previous.avgWeight &&
+                    current.avgReps > previous.avgReps
+                ) {
+                    process = 'up'
+                } else {
+                    process = 'down'
+                }
+            }
+            aggregate[i].progress = process
+        }
+
+        return aggregate
     }
 
     async findOne(
