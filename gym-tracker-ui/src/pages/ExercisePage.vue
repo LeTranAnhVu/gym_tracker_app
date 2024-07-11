@@ -56,7 +56,6 @@ onMounted(async () => {
 </script>
 <template>
     <div class="px-5 flex flex-col gap-3">
-        <van-icon :style="{ transform: 'rotate(180deg)' }" name="down"></van-icon>
         <div class="mt-8">
             <RepsAndWeightStepper
                 v-model:weight="weight"
