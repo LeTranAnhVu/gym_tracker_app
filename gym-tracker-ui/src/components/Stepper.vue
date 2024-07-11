@@ -42,7 +42,7 @@ function increase() {
                 icon="minus"
                 @click="decrease"
             ></van-button>
-            <p class="text-8xl w-[240px] h-[96px] text-center" @click="openNumbKeyboard">{{ stepperValue }}</p>
+            <p class="text-8xl w-[240px] h-[96px] text-center">{{ stepperValue }}</p>
             <van-button
                 class="stepper-button disable-dbl-tap-zoom"
                 plain

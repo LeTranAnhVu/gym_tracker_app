@@ -91,8 +91,6 @@ async function deleteExercise(workoutId: number, id: number) {
                 >Add Exercise</van-button
             >
 
-            <!-- list -->
-            <!-- <ExerciseCardList></ExerciseCardList> -->
             <div class="flex flex-col gap-5">
                 <ExerciseCard
                     v-for="exercise in assosiatedExercises"

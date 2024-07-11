@@ -102,7 +102,7 @@ onMounted(async () => {
                     </div>
                 </div>
             </div>
-            <div v-if="selectedExerciseId" class="fixed bottom-2 w-[95%] mx-auto left-[50%] translate-x-[-50%]">
+            <div v-if="selectedExerciseId" class="fixed bottom-[70px] w-[95%] mx-auto left-[50%] translate-x-[-50%]">
                 <van-button
                     type="primary"
                     icon="plus"
