@@ -6,8 +6,11 @@ import setupVant from './importVantComponents'
 import router from './router'
 import { Auth0VueClient, createAuth0 } from '@auth0/auth0-vue'
 import createApiFetch from './lib/createApiFetch'
+import { createPinia } from 'pinia'
 
+const pinia = createPinia()
 const app = createApp(App)
+app.use(pinia)
 
 setupVant(app)
 app.use(router)
