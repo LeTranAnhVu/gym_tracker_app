@@ -4,16 +4,13 @@ import { useApiFetch } from '../main'
 import { showConfirmDialog, showToast } from 'vant'
 import router from '../router'
 import { Workout } from '../lib/models/Workout'
-
-function pad2(n: number) {
-    return n.toString().padStart(2, '0')
-}
+import { pad2 } from '../lib/helpers/pad2'
 
 const newWorkoutName = computed(() => {
     const dateObj = new Date()
-    const month = dateObj.getUTCMonth() + 1 // months from 1-12
-    const day = dateObj.getUTCDate()
-    const year = dateObj.getUTCFullYear()
+    const month = dateObj.getMonth() + 1 // months from 1-12
+    const day = dateObj.getDate()
+    const year = dateObj.getFullYear().toLocaleString().slice(3)
 
     return `${pad2(day)}-${pad2(month)}-${year}`
 })
@@ -36,7 +33,6 @@ async function loadData() {
 }
 function openCreateNewWorkoutPopup() {
     show.value = true
-    // router.push({ name: 'workout', params: { workoutId: 1 } })
 }
 
 function openWorkoutDetailPopup(workout: Workout) {
@@ -102,16 +98,16 @@ function confirmToGoToWorkoutDetail(workout: Workout) {
             <div
                 v-for="(workout, i) in workouts"
                 :key="workout.id"
-                class="h-[150px] min-w-[130px] w-[130px] rounded-xl py-5 px-2"
+                class="h-[180px] min-w-[150px] w-[130px] rounded-xl py-5 px-2"
                 :class="i == 0 ? 'bg-accent' : 'bg-accent-2'"
                 @click="openWorkoutDetailPopup(workout)"
             >
                 <div class="flex flex-col justify-between h-full" :class="i == 0 ? 'text-white' : ''">
                     <p class="text-xl font-regurlar leading-6">{{ workout.name }}</p>
                     <div class="text-right">
-                        <p class="text-lg">5 <span class="text-xs">Exercises</span></p>
-                        <p class="text-lg">1 <span class="text-xs">h</span></p>
-                        <p class="text-lg">400 <span class="text-xs">Kcal</span></p>
+                        <p class="text-lg"># <span class="text-xs">Exercises</span></p>
+                        <p class="text-lg"># <span class="text-xs">h</span></p>
+                        <p class="text-lg">### <span class="text-xs">Kcal</span></p>
                     </div>
                 </div>
             </div>

@@ -23,6 +23,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Stepper: typeof import('./src/components/Stepper.vue')['default']
+    Timer: typeof import('./src/components/Timer.vue')['default']
     UpsertExercisePopup: typeof import('./src/components/UpsertExercisePopup.vue')['default']
     VanButton: typeof import('vant/es')['Button']
     VanCell: typeof import('vant/es')['Cell']
@@ -34,9 +35,11 @@ declare module 'vue' {
     VanNumberKeyboard: typeof import('vant/es')['NumberKeyboard']
     VanPopup: typeof import('vant/es')['Popup']
     VanSearch: typeof import('vant/es')['Search']
+    VanSkeleton: typeof import('vant/es')['Skeleton']
     VanSwipe: typeof import('vant/es')['Swipe']
     VanSwipeCell: typeof import('vant/es')['SwipeCell']
     VanSwipeItem: typeof import('vant/es')['SwipeItem']
     VantIcon: typeof import('vant/es')['tIcon']
+    WorkoutMainCard: typeof import('./src/components/WorkoutMainCard.vue')['default']
   }
 }

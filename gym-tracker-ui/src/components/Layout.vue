@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useAuth0 } from '@auth0/auth0-vue'
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 const activeHam = ref(false)
@@ -13,7 +13,7 @@ function goBack() {
 const auth0 = useAuth0()
 const isAuthenticated = computed(() => auth0.isAuthenticated.value)
 const isLoadding = computed(() => auth0.isLoading.value)
-
+const isWorkoutPage = computed(() => route.name === 'workout')
 function toggleHam() {
     activeHam.value = !activeHam.value
 }
@@ -30,7 +30,7 @@ watch(
 </script>
 <template>
     <div v-if="isAuthenticated && !isLoadding">
-        <div class="pb-5">
+        <div class="pb-0 relative bg-white shadow-sm">
             <van-nav-bar left-text="Back" left-arrow @click-left="goBack">
                 <template #left>
                     <van-image
@@ -49,6 +49,12 @@ watch(
                 </template>
                 <template #title>
                     <h1 class="text-2xl">{{ title }}</h1>
+                    <div
+                        v-if="!isWorkoutPage"
+                        class="rounded-b-xl px-6 pb-1 flex flex-col text-accent absolute bg-white translate-y-[100%] bottom-[1px] left-[50%] translate-x-[-50%] shadow-lg z-10"
+                    >
+                        <Timer dense></Timer>
+                    </div>
                 </template>
                 <template #right>
                     <div
