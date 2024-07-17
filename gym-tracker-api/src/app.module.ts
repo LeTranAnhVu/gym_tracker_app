@@ -9,6 +9,7 @@ import { UsersModule } from './users/users.module'
 import { ExercisesModule } from './exercises/exercises.module'
 import { WorkoutsModule } from './workouts/workouts.module'
 import { ExerciseSetsModule } from './exercise-sets/exercise-sets.module'
+import { WorkoutLapsModule } from './workout-laps/workout-laps.module'
 
 @Module({
     imports: [
@@ -20,7 +21,8 @@ import { ExerciseSetsModule } from './exercise-sets/exercise-sets.module'
         UsersModule,
         ExercisesModule,
         WorkoutsModule,
-        ExerciseSetsModule
+        ExerciseSetsModule,
+        WorkoutLapsModule
     ],
     controllers: [AppController],
     providers: [

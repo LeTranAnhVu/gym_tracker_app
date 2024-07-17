@@ -64,6 +64,13 @@
       "when": 1720259700349,
       "tag": "0008_add-createdAt-column-to-workouts_exercises-table",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1720846469261,
+      "tag": "0009_create-workout_laps-table",
+      "breakpoints": true
     }
   ]
 }
