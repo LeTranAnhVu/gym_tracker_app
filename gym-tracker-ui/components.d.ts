@@ -8,6 +8,8 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AddExercise: typeof import('./src/components/AddExercise.vue')['default']
+    AddExercisePopup: typeof import('./src/components/AddExercisePopup.vue')['default']
+    CreateExercisePopup: typeof import('./src/components/CreateExercisePopup.vue')['default']
     ExerciseCard: typeof import('./src/components/ExerciseCard.vue')['default']
     ExerciseCardList: typeof import('./src/components/ExerciseCardList.vue')['default']
     ExerciseHistoryTable: typeof import('./src/components/ExerciseHistoryTable.vue')['default']
@@ -21,14 +23,23 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Stepper: typeof import('./src/components/Stepper.vue')['default']
+    Timer: typeof import('./src/components/Timer.vue')['default']
+    UpsertExercisePopup: typeof import('./src/components/UpsertExercisePopup.vue')['default']
     VanButton: typeof import('vant/es')['Button']
+    VanCell: typeof import('vant/es')['Cell']
     VanCellGroup: typeof import('vant/es')['CellGroup']
     VanField: typeof import('vant/es')['Field']
+    VanIcon: typeof import('vant/es')['Icon']
     VanImage: typeof import('vant/es')['Image']
     VanNavBar: typeof import('vant/es')['NavBar']
+    VanNumberKeyboard: typeof import('vant/es')['NumberKeyboard']
     VanPopup: typeof import('vant/es')['Popup']
     VanSearch: typeof import('vant/es')['Search']
+    VanSkeleton: typeof import('vant/es')['Skeleton']
     VanSwipe: typeof import('vant/es')['Swipe']
+    VanSwipeCell: typeof import('vant/es')['SwipeCell']
     VanSwipeItem: typeof import('vant/es')['SwipeItem']
+    VantIcon: typeof import('vant/es')['tIcon']
+    WorkoutMainCard: typeof import('./src/components/WorkoutMainCard.vue')['default']
   }
 }

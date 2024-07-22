@@ -1,24 +1,35 @@
 <script lang="ts" setup>
 import { toRefs } from 'vue'
-export type StepperItem = {
+
+export type SideItem = {
     unit: string
     value: number
 }
 
 type Props = {
-    stepper: StepperItem
-    left: StepperItem
-    right: StepperItem
+    stepperUnit: string
+    left?: SideItem
+    right?: SideItem
+    step: number
 }
 
+const stepperValue = defineModel<number | null>('stepperValue', { required: true })
 const props = defineProps<Props>()
+const { left, right, step } = toRefs(props)
 function decrease() {
-    props.stepper.value -= 0.5
+    if (stepperValue.value === null) {
+        stepperValue.value = 0
+    }
+
+    stepperValue.value! -= step.value
 }
 function increase() {
-    props.stepper.value += 0.5
+    if (stepperValue.value === null) {
+        stepperValue.value = 0
+    }
+
+    stepperValue.value! += step.value
 }
-const { stepper } = toRefs(props)
 </script>
 
 <template>
@@ -31,7 +42,7 @@ const { stepper } = toRefs(props)
                 icon="minus"
                 @click="decrease"
             ></van-button>
-            <p class="text-8xl w-[240px] text-center">{{ stepper.value }}</p>
+            <p class="text-8xl w-[240px] h-[96px] text-center">{{ stepperValue }}</p>
             <van-button
                 class="stepper-button disable-dbl-tap-zoom"
                 plain
@@ -45,7 +56,7 @@ const { stepper } = toRefs(props)
                 <p v-if="left">{{ left.value }} {{ left.unit }}</p>
             </div>
             <div class="middle">
-                <p class="text-5xl font-light">{{ stepper.unit }}</p>
+                <p class="text-5xl font-light">{{ stepperUnit }}</p>
             </div>
             <div class="right w-[30%] font-thin">
                 <p v-if="right">{{ right.value }} {{ right.unit }}</p>

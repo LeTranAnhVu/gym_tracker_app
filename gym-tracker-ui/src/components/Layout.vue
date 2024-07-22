@@ -1,23 +1,40 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { useAuth0 } from '@auth0/auth0-vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useTimerStore } from '../lib/stores/useTimerStore'
 
 const activeHam = ref(false)
 const router = useRouter()
 const route = useRoute()
 const title = computed(() => route.meta.title)
 function goBack() {
-    console.log('back')
     router.back()
 }
 
+const hasAnyActiveWorkout = computed(() => useTimerStore().isFinished === false)
+const auth0 = useAuth0()
+const isAuthenticated = computed(() => auth0.isAuthenticated.value)
+const isLoadding = computed(() => auth0.isLoading.value)
+const isWorkoutPage = computed(() => route.name === 'workout')
+const isWorkoutExercisePage = computed(() => route.name === 'exercise')
 function toggleHam() {
     activeHam.value = !activeHam.value
 }
+
+watch(
+    [isAuthenticated, isLoadding],
+    async () => {
+        if (!isAuthenticated.value && !isLoadding.value) {
+            await auth0.loginWithRedirect()
+        }
+    },
+    { immediate: true },
+)
 </script>
 <template>
-    <div>
-        <div class="pb-5">
+    <div v-if="isAuthenticated && !isLoadding">
+        <div class="pb-0 relative bg-white shadow-sm">
             <van-nav-bar left-text="Back" left-arrow @click-left="goBack">
                 <template #left>
                     <van-image
@@ -36,6 +53,12 @@ function toggleHam() {
                 </template>
                 <template #title>
                     <h1 class="text-2xl">{{ title }}</h1>
+                    <div
+                        v-if="!isWorkoutPage && (isWorkoutExercisePage || hasAnyActiveWorkout)"
+                        class="rounded-b-xl px-6 pb-1 flex flex-col text-accent absolute bg-white translate-y-[100%] bottom-[1px] left-[50%] translate-x-[-50%] shadow-lg z-10"
+                    >
+                        <Timer dense></Timer>
+                    </div>
                 </template>
                 <template #right>
                     <div

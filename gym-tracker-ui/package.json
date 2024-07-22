@@ -7,9 +7,13 @@
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint --ext .ts,.vue src --fix"
+    "lint": "eslint --ext .ts,.vue src --fix",
+    "test": "vitest"
   },
   "dependencies": {
+    "@auth0/auth0-vue": "^2.3.3",
+    "@vueuse/core": "^10.11.0",
+    "pinia": "^2.1.7",
     "tailwind-hamburgers": "^1.3.5",
     "vant": "^4.9.1",
     "vue": "^3.4.21",
@@ -31,6 +35,7 @@
     "unplugin-auto-import": "^0.17.6",
     "unplugin-vue-components": "^0.27.0",
     "vite": "^5.2.0",
+    "vitest": "^2.0.3",
     "vue-tsc": "^2.0.6"
   }
 }

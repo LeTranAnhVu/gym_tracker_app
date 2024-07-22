@@ -11,14 +11,14 @@ import {
 import { workouts } from './workouts.schema'
 import { exercises } from './exercises.schema'
 
-export const exerciseSets = pgTable('exerciseSets', {
+export const exerciseSets = pgTable('exercise_sets', {
     id: serial('id').primaryKey(),
     workoutId: integer('workoutId')
         .notNull()
         .references(() => workouts.id, { onDelete: 'cascade' }),
     exerciseId: integer('exerciseId')
         .notNull()
-        .references(() => exercises.id),
+        .references(() => exercises.id, { onDelete: 'cascade' }),
     customName: varchar('customName', { length: 400 }),
     weight: decimal('weight', { precision: 4, scale: 1 }),
     reps: smallint('reps'),

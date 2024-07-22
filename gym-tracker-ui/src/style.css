@@ -20,7 +20,7 @@
   --van-button-primary-border-color: var(--color-btn-primary);
   --van-nav-bar-height	: 80px;
   --van-nav-bar-icon-color: var(--color-text);
-  /* --van-toast-text-color: var(--color-text); */
+  --van-toast-text-color: var(--color-text);
 }
 
 .van-field.van-cell {

@@ -1,0 +1,1 @@
+ALTER TABLE "workouts_exercises" ADD COLUMN "createdAt" timestamp DEFAULT now();

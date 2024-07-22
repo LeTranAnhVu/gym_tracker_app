@@ -43,6 +43,34 @@
       "when": 1718704702097,
       "tag": "0005_create-exercise-sets-table",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1720258641333,
+      "tag": "0006_create-workouts_exercises-table",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1720258832370,
+      "tag": "0007_rename-exercises_sets-table",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1720259700349,
+      "tag": "0008_add-createdAt-column-to-workouts_exercises-table",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1720846469261,
+      "tag": "0009_create-workout_laps-table",
+      "breakpoints": true
     }
   ]
 }

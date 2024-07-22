@@ -1,7 +1,9 @@
 import { Client } from 'pg'
 import { drizzle } from 'drizzle-orm/node-postgres'
 import * as schema from './schema'
+import { types } from 'pg'
 
+types.setTypeParser(types.builtins.NUMERIC, (value) => parseFloat(value))
 export const DrizzleAsyncProvider = 'drizzleProvider'
 export const drizzleProvider = [
     {

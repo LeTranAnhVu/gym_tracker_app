@@ -1,5 +1,4 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 <template>
     <div class="pt-5 px-5">
         <!-- main card -->

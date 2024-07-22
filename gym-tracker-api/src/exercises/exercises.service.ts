@@ -9,7 +9,7 @@ import { UpdateExerciseDto } from './dto/update-exercise.dto'
 import { DrizzleAsyncProvider } from 'src/drizzle/drizzle.provider'
 import { NodePgDatabase } from 'drizzle-orm/node-postgres'
 import * as schema from '../drizzle/schema'
-import { and, eq, isNull, ne, or } from 'drizzle-orm'
+import { and, asc, eq, isNull, ne, or } from 'drizzle-orm'
 @Injectable()
 export class ExercisesService {
     constructor(
@@ -45,7 +45,8 @@ export class ExercisesService {
             where: or(
                 isNull(schema.exercises.createdBy),
                 eq(schema.exercises.createdBy, userId)
-            )
+            ),
+            orderBy: [asc(schema.exercises.id)]
         })
     }
 
