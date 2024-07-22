@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { showFailToast, showSuccessToast, showToast } from 'vant'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useApiFetch } from '../main'
 import { useRoute } from 'vue-router'
 import { AggregatedExercise } from '../lib/models/AggregatedExercise'
-import { transform } from 'typescript'
+import { useTimerStore } from '../lib/stores/useTimerStore'
 const note = ref('')
 const weight = ref<number | null>(null)
 const reps = ref<number | null>(1)
 const execiseSets = ref<AggregatedExercise[]>([])
 const route = useRoute()
-const workoutId = computed(() => route.params.workoutId)
+const workoutId = computed(() => Number(route.params.workoutId))
 const exerciseId = computed(() => route.params.exerciseId)
 const disabled = computed(() => weight.value === null || reps.value === null)
 async function createSet() {
@@ -53,10 +53,19 @@ function setInitialWeightAndReps() {
 onMounted(async () => {
     await loadData()
 })
+
+watch(
+    workoutId,
+    async () => {
+        useTimerStore().workoutId = workoutId.value
+        await loadData()
+    },
+    { immediate: true },
+)
 </script>
 <template>
     <div class="px-5 flex flex-col gap-3">
-        <div class="mt-8">
+        <div class="mt-10">
             <RepsAndWeightStepper
                 v-model:weight="weight"
                 v-model:reps="reps"

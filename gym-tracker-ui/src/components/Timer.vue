@@ -1,87 +1,32 @@
 <script lang="ts" setup>
-import { showConfirmDialog } from 'vant'
-import { onBeforeUnmount, ref, watch } from 'vue'
+import { computed } from 'vue'
 import { pad2 } from '../lib/helpers/pad2'
+import { useTimerStore } from '../lib/stores/useTimerStore'
 
 defineProps<{
     dense: boolean
 }>()
 
-// Counter
-const countMiliSeconds = ref(0)
-const countSeconds = ref(0)
-const countMinutes = ref(0)
-const countHours = ref(0)
-
-const isCounting = ref(false)
-function startCounting() {
-    isCounting.value = true
-}
-
-let interval: number | null = null
-
-watch(isCounting, (val: boolean) => {
-    if (val) {
-        interval = setInterval(() => {
-            countMiliSeconds.value++
-            if (countMiliSeconds.value === 100) {
-                countMiliSeconds.value = 0
-                countSeconds.value++
-            }
-            if (countSeconds.value === 60) {
-                countSeconds.value = 0
-                countMinutes.value++
-            }
-            if (countMinutes.value === 60) {
-                countMinutes.value = 0
-                countHours.value++
-            }
-        }, 10)
-    } else {
-        if (interval) {
-            clearInterval(interval)
-        }
-    }
-})
-
-function pauseCounting() {
-    isCounting.value = false
-}
-
-async function resetCount() {
-    const confirm = await confirmPopup()
-    if (confirm) {
-        countMiliSeconds.value = 0
-        countSeconds.value = 0
-        countMinutes.value = 0
-        countHours.value = 0
-    }
-}
-function confirmPopup() {
-    // open the confirm popup
-    return new Promise((resolve, _) => {
-        showConfirmDialog({
-            title: 'Reset the counter?',
-            message: 'It will reset all your the progress in this workout',
-        })
-            .then(() => {
-                // reset the counter
-                resolve(true)
-            })
-            .catch(() => {
-                resolve(false)
-            })
-    })
-}
-
-onBeforeUnmount(() => {
-    if (interval) {
-        clearInterval(interval)
-    }
-})
+const { startCounting, pauseCounting, stopCounting, resetCount } = useTimerStore()
+const countHours = computed(() => useTimerStore().countHours)
+const countMinutes = computed(() => useTimerStore().countMinutes)
+const countSeconds = computed(() => useTimerStore().countSeconds)
+const countCentiseconds = computed(() => Math.floor(useTimerStore().countMiliSeconds / 10))
+const isCounting = computed(() => useTimerStore().isCounting)
+const isFinished = computed(() => useTimerStore().isFinished)
 </script>
 <template>
     <div v-if="dense" class="flex flex-nowrap gap-10 grow items-center justify-center">
+        <span class="relative flex h-3 w-3">
+            <span
+                v-if="isCounting"
+                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"
+            ></span>
+            <span
+                class="relative inline-flex rounded-full h-3 w-3 bg-accent"
+                :class="isCounting ? 'opacity-100' : 'opacity-20'"
+            ></span>
+        </span>
         <div class="font-light">
             <p class="text-xl font-thin flex flex-nowrap items-end">
                 <span class="w-[25px]">{{ pad2(countHours) }}</span>
@@ -89,12 +34,18 @@ onBeforeUnmount(() => {
                 <span class="w-[25px]">{{ pad2(countMinutes) }}</span>
                 <span>:</span>
                 <span class="w-[25px]">{{ pad2(countSeconds) }}</span>
-                <span class="text-sm w-[10px] ml-1">{{ pad2(countMiliSeconds) }}</span>
+                <span class="text-sm w-[10px] ml-1">{{ pad2(countCentiseconds) }}</span>
             </p>
         </div>
         <div class="flex gap-5">
             <van-button v-if="!isCounting" class="btn sm" icon="play-circle-o" @click="startCounting"></van-button>
             <van-button v-if="isCounting" class="btn sm" icon="pause-circle-o" @click="pauseCounting"></van-button>
+            <van-button
+                class="btn sm"
+                icon="stop-circle-o"
+                :disabled="isCounting || isFinished !== false"
+                @click="stopCounting"
+            ></van-button>
             <van-button class="btn sm" icon="replay" :disabled="isCounting" @click="resetCount"></van-button>
         </div>
     </div>
@@ -106,12 +57,18 @@ onBeforeUnmount(() => {
                 <span class="w-[60px]">{{ pad2(countMinutes) }}</span>
                 <span>:</span>
                 <span class="w-[60px]">{{ pad2(countSeconds) }}</span>
-                <span class="text-sm w-[10px]">{{ pad2(countMiliSeconds) }}</span>
+                <span class="text-sm w-[10px]">{{ pad2(countCentiseconds) }}</span>
             </p>
         </div>
         <div class="flex gap-4">
-            <van-button v-if="!isCounting" class="btn" icon="play-circle-o" @click="startCounting"></van-button>
+            <van-button v-if="!isCounting" class="btn" icon="play-circle-o" @click="() => startCounting()"></van-button>
             <van-button v-if="isCounting" class="btn" icon="pause-circle-o" @click="pauseCounting"></van-button>
+            <van-button
+                class="btn"
+                icon="stop-circle-o"
+                :disabled="isCounting || isFinished !== false"
+                @click="stopCounting"
+            ></van-button>
             <van-button class="btn" icon="replay" :disabled="isCounting" @click="resetCount"></van-button>
         </div>
     </div>

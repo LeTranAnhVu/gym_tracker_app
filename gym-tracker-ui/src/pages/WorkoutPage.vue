@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { showFailToast, showSuccessToast } from 'vant'
 import { useRoute } from 'vue-router'
 import { WorkoutDetail } from '../lib/models/WorkoutDetail'
 import { useApiFetch } from '../main'
 import { Exercise } from '../lib/models/Exercise'
 import { pad2 } from '../lib/helpers/pad2'
+import { useTimerStore } from '../lib/stores/useTimerStore'
 
-const workoutId = computed(() => useRoute().params.workoutId)
+const workoutId = computed(() => Number(useRoute().params.workoutId))
 const workout = ref<WorkoutDetail | null>(null)
 const assosiatedExercises = ref<Exercise[]>([])
 const workoutMonth = computed(() => {
@@ -59,12 +60,26 @@ async function deleteExercise(workoutId: number, id: number) {
         showFailToast(`${resp.error.value}`)
     }
 }
+
+watch(
+    workoutId,
+    async () => {
+        useTimerStore().workoutId = workoutId.value
+        await loadData()
+    },
+    { immediate: true },
+)
 </script>
 <template>
     <div class="px-5">
         <div class="flex flex-col gap-3">
             <!-- card -->
-            <WorkoutMainCard class="mt-5" :month="workoutMonth" :day="workoutDay"></WorkoutMainCard>
+            <WorkoutMainCard
+                class="mt-5"
+                :month="workoutMonth"
+                :day="workoutDay"
+                :workout-id="workoutId"
+            ></WorkoutMainCard>
             <van-button
                 type="primary"
                 icon="plus"

@@ -2,6 +2,7 @@
 import { useAuth0 } from '@auth0/auth0-vue'
 import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useTimerStore } from '../lib/stores/useTimerStore'
 
 const activeHam = ref(false)
 const router = useRouter()
@@ -10,10 +11,13 @@ const title = computed(() => route.meta.title)
 function goBack() {
     router.back()
 }
+
+const hasAnyActiveWorkout = computed(() => useTimerStore().isFinished === false)
 const auth0 = useAuth0()
 const isAuthenticated = computed(() => auth0.isAuthenticated.value)
 const isLoadding = computed(() => auth0.isLoading.value)
 const isWorkoutPage = computed(() => route.name === 'workout')
+const isWorkoutExercisePage = computed(() => route.name === 'exercise')
 function toggleHam() {
     activeHam.value = !activeHam.value
 }
@@ -50,7 +54,7 @@ watch(
                 <template #title>
                     <h1 class="text-2xl">{{ title }}</h1>
                     <div
-                        v-if="!isWorkoutPage"
+                        v-if="!isWorkoutPage && (isWorkoutExercisePage || hasAnyActiveWorkout)"
                         class="rounded-b-xl px-6 pb-1 flex flex-col text-accent absolute bg-white translate-y-[100%] bottom-[1px] left-[50%] translate-x-[-50%] shadow-lg z-10"
                     >
                         <Timer dense></Timer>

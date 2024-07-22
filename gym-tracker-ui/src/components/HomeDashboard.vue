@@ -1,5 +1,5 @@
 <template>
-    <div class="rounded-2xl p-7 flex flex-col gap-3" :style="{ background: 'var(--color-bg-secondary)' }">
+    <div class="rounded-2xl p-7 flex flex-col gap-3 bg-neutral-1 shadow-lg">
         <div class="flex flex-initial">
             <div class="text-5xl font-bold flex flex-col justify-center items-center w-[30%]">
                 <p>July</p>
