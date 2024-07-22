@@ -51,7 +51,7 @@ export class WorkoutLapsController {
     }
 
     @Post(':id/stop')
-    update(
+    stop(
         @Req() req: Request,
         @Param('workoutId', ParseIntPipe) workoutId: number,
         @Param('id', ParseIntPipe) id: number,
@@ -74,5 +74,14 @@ export class WorkoutLapsController {
     ) {
         const userId = this.getUserId(req)
         return this.lapsService.remove(userId, workoutId, id)
+    }
+
+    @Post('reset')
+    removeAll(
+        @Req() req: Request,
+        @Param('workoutId', ParseIntPipe) workoutId: number
+    ) {
+        const userId = this.getUserId(req)
+        return this.lapsService.removeAll(userId, workoutId)
     }
 }

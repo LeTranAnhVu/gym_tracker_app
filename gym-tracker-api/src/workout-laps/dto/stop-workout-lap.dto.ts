@@ -1,8 +1,8 @@
-import { PartialType } from '@nestjs/mapped-types'
-import { StartWorkoutLapDto } from './start-workout-lap.dto'
+import { Transform } from 'class-transformer'
 import { IsDate } from 'class-validator'
 
-export class StopWorkoutLapDto extends PartialType(StartWorkoutLapDto) {
+export class StopWorkoutLapDto {
+    @Transform(({ value }) => new Date(value))
     @IsDate()
     endTime: Date
 }

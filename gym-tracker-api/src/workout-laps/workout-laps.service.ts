@@ -111,4 +111,11 @@ export class WorkoutLapsService {
             .delete(schema.workoutLaps)
             .where(eq(schema.workoutLaps.id, existing.id))
     }
+
+    async removeAll(userId: number, workoutId: number): Promise<void> {
+        await this.workoutsService.findOne(userId, workoutId)
+        await this.db
+            .delete(schema.workoutLaps)
+            .where(eq(schema.workoutLaps.workoutId, workoutId))
+    }
 }
