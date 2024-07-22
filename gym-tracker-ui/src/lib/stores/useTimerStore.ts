@@ -30,18 +30,6 @@ export const useTimerStore = defineStore('timer', () => {
         { immediate: true },
     )
 
-    function clearData() {
-        workoutId.value = null
-        isFinished.value = null
-        countMiliSeconds.value = 0
-        countSeconds.value = 0
-        countMinutes.value = 0
-        countHours.value = 0
-        isCounting.value = false
-        laps.value = []
-        openLap.value = null
-    }
-
     async function startCounting() {
         workoutIdRequired()
 
