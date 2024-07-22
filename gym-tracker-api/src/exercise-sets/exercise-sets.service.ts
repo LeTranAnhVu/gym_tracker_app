@@ -4,7 +4,7 @@ import { UpdateExerciseSetDto } from './dto/update-exercise-set.dto'
 import { DrizzleAsyncProvider } from 'src/drizzle/drizzle.provider'
 import { NodePgDatabase } from 'drizzle-orm/node-postgres'
 import * as schema from '../drizzle/schema'
-import { and, eq, sql } from 'drizzle-orm'
+import { and, eq, inArray, sql } from 'drizzle-orm'
 import { NotFoundException } from '@nestjs/common'
 import { WorkoutsService } from 'src/workouts/workouts.service'
 import { ExercisesService } from 'src/exercises/exercises.service'
@@ -52,7 +52,7 @@ export class ExerciseSetsService {
         workoutId: number,
         exerciseId: number
     ) {
-        const workout = await this.workoutsService.findOne(userId, workoutId)
+        const workouts = await this.workoutsService.findAll(userId)
         const aggregate = await this.db
             .select({
                 workoutId: schema.exerciseSets.workoutId,
@@ -71,7 +71,13 @@ export class ExerciseSetsService {
                 schema.exerciseSets.exerciseId
             )
             .having(
-                sql`"exerciseId" = ${exerciseId} AND "workoutId" = ${workout.id}`
+                and(
+                    eq(schema.exerciseSets.exerciseId, exerciseId),
+                    inArray(
+                        schema.exerciseSets.workoutId,
+                        workouts.map((w) => w.id)
+                    )
+                )
             )
             .orderBy(sql`"createdAt"::date desc`)
 
